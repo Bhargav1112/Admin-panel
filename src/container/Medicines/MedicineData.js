@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function MedicineDataTable(props) {
     const [tableData, setTableData] = useState([]);
@@ -33,10 +35,10 @@ export default function MedicineDataTable(props) {
                             variant="contained"
                             style={{ marginRight: "5px" }}
                         >
-                            Edit
+                            <ModeEditIcon />
                         </Button>
                         <Button variant="contained" onClick={deleteHandler}>
-                            Delete
+                            <DeleteIcon />
                         </Button>
                     </>
                 );
