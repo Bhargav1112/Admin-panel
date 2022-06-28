@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import MedicineDataTable from "./MedicineData";
 
-function Medicine(props) {
+function Medicine() {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
