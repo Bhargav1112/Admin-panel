@@ -99,9 +99,9 @@ export default function MedicineDataTable(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseAlert}>Disagree</Button>
+          <Button onClick={handleCloseAlert}>Cancel</Button>
           <Button onClick={deleteHandler} autoFocus>
-            Agree
+            Ok
           </Button>
         </DialogActions>
       </Dialog>
