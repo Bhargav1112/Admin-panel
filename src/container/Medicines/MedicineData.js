@@ -13,11 +13,11 @@ import Button from "@mui/material/Button";
 export default function MedicineDataTable(props) {
   const [tableData, setTableData] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
-  const [rowData, setRowData] = useState(null);
+  const [data, setData] = useState(null);
 
-  const handleClickOpenAlert = (rowData) => {
+  const handleClickOpenAlert = (data) => {
     setOpenAlert(true);
-    setRowData(rowData);
+    setData(data);
   };
 
   const handleCloseAlert = () => {
@@ -26,7 +26,7 @@ export default function MedicineDataTable(props) {
 
   const deleteHandler = () => {
     const storagedata = JSON.parse(localStorage.getItem("medicine"));
-    const filteredData = storagedata.filter((item) => item.id !== rowData.id);
+    const filteredData = storagedata.filter((item) => item.id !== data.id);
     setTableData(filteredData);
     localStorage.setItem("medicine", JSON.stringify(filteredData));
     handleCloseAlert();
@@ -36,7 +36,7 @@ export default function MedicineDataTable(props) {
     props.onEdit(editRowData.id);
     props.formik.setValues(editRowData.row);
     props.setIsEditing(true);
-    setRowData(editRowData);
+    setData(editRowData);
   };
 
   const columns = [
