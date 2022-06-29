@@ -45,7 +45,7 @@ function Medicine() {
   const updateHandler = (values, action) => {
     const localData = JSON.parse(localStorage.getItem("medicine"));
     const existingItem = localData.find((item) => item.id === editId);
-    const updatedItem = { ...existingItem, ...values };
+    const updatedItem = { id: existingItem.id, ...values };
     const existingItemIndex = localData.findIndex((item) => item.id === editId);
     localData[existingItemIndex] = updatedItem;
     localStorage.setItem("medicine", JSON.stringify(localData));
