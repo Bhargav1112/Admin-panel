@@ -11,13 +11,17 @@ import MedicineDataTable from "./MedicineData";
 
 function Medicine() {
   const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(0);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setEditId(id);
   };
 
   const handleClose = () => {
     setOpen(false);
+    formik.resetForm();
   };
 
   const insertToLocalStorage = (values, action) => {
@@ -38,6 +42,19 @@ function Medicine() {
     action.resetForm();
   };
 
+  const updateHandler = (values, action) => {
+    const localData = JSON.parse(localStorage.getItem("medicine"));
+    const existingItem = localData.find((item) => item.id === editId);
+    const updatedItem = { ...existingItem, ...values };
+    const existingItemIndex = localData.findIndex((item) => item.id === editId);
+    localData[existingItemIndex] = updatedItem;
+    localStorage.setItem("medicine", JSON.stringify(localData));
+    dataMethod();
+    handleClose();
+    action.resetForm();
+    setIsEditing(false);
+  };
+
   const schema = yup.object().shape({
     name: yup.string().required("Please enter name"),
     price: yup.number().positive().required("Required"),
@@ -53,7 +70,7 @@ function Medicine() {
       quantity: "",
     },
     validationSchema: schema,
-    onSubmit: insertToLocalStorage,
+    onSubmit: isEditing ? updateHandler : insertToLocalStorage,
   });
 
   const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
@@ -138,11 +155,16 @@ function Medicine() {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Add</Button>
+              <Button type="submit">{!isEditing ? "Add" : "Update"}</Button>
             </DialogActions>
           </form>
         </Dialog>
-        <MedicineDataTable onAdd={onDisplayData} />
+        <MedicineDataTable
+          onAdd={onDisplayData}
+          onEdit={handleClickOpen}
+          formik={formik}
+          setIsEditing={setIsEditing}
+        />
       </div>
     </div>
   );

@@ -13,11 +13,11 @@ import Button from "@mui/material/Button";
 export default function MedicineDataTable(props) {
   const [tableData, setTableData] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
-  const [deleteRowData, setDeleteRowData] = useState(null);
+  const [rowData, setRowData] = useState(null);
 
   const handleClickOpenAlert = (rowData) => {
     setOpenAlert(true);
-    setDeleteRowData(rowData);
+    setRowData(rowData);
   };
 
   const handleCloseAlert = () => {
@@ -26,12 +26,17 @@ export default function MedicineDataTable(props) {
 
   const deleteHandler = () => {
     const storagedata = JSON.parse(localStorage.getItem("medicine"));
-    const filteredData = storagedata.filter(
-      (item) => item.id !== deleteRowData.id
-    );
+    const filteredData = storagedata.filter((item) => item.id !== rowData.id);
     setTableData(filteredData);
     localStorage.setItem("medicine", JSON.stringify(filteredData));
     handleCloseAlert();
+  };
+
+  const editHandler = (editRowData) => {
+    props.onEdit(editRowData.id);
+    props.formik.setValues(editRowData.row);
+    props.setIsEditing(true);
+    setRowData(editRowData);
   };
 
   const columns = [
@@ -46,7 +51,10 @@ export default function MedicineDataTable(props) {
       renderCell: (params) => {
         return (
           <>
-            <IconButton aria-label="delete">
+            <IconButton
+              aria-label="edit"
+              onClick={editHandler.bind(null, params)}
+            >
               <ModeEditIcon />
             </IconButton>
             <IconButton
