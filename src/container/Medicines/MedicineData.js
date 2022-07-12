@@ -86,7 +86,7 @@ export default function MedicineDataTable(props) {
     const localData = JSON.parse(localStorage.getItem("medicine"));
     const searchedData = localData.filter(
       (med) =>
-        med.name.toLowerCase().includes(enteredString) ||
+        med.name.toLowerCase().includes(enteredString.toLowerCase()) ||
         med.price.toString().includes(enteredString) ||
         med.quantity.toString().includes(enteredString) ||
         med.expiry.toString().includes(enteredString)
