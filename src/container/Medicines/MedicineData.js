@@ -9,6 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 
 export default function MedicineDataTable(props) {
   const [tableData, setTableData] = useState([]);
@@ -82,8 +83,30 @@ export default function MedicineDataTable(props) {
 
   props.onAdd(onAddMedicine);
 
+  const searchHandler = (event) => {
+    const enteredString = event.target.value;
+    const localData = JSON.parse(localStorage.getItem("medicine"));
+    const searchedData = localData.filter(
+      (med) =>
+        med.name.toLowerCase().includes(enteredString) ||
+        med.price.toString().includes(enteredString) ||
+        med.quantity.toString().includes(enteredString) ||
+        med.expiry.toString().includes(enteredString)
+    );
+    setTableData(searchedData);
+  };
+
   return (
     <>
+      <TextField
+        margin="dense"
+        id="search"
+        label="Medicine search"
+        type="text"
+        variant="standard"
+        onChange={searchHandler}
+        name="search"
+      />
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={tableData}
