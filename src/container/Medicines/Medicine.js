@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import MedicineDataTable from "./MedicineData";
+import { useSelector } from "react-redux";
 
 function Medicine() {
   const [open, setOpen] = useState(false);
@@ -80,9 +81,11 @@ function Medicine() {
     dataMethod = method;
   };
 
+  const count = useSelector((state) => state.count.counter);
+
   return (
     <div>
-      <h1>MEDICINES.</h1>
+      <h1>MEDICINES.: {count}</h1>
       <div>
         <Button variant="contained" onClick={handleClickOpen}>
           Add +

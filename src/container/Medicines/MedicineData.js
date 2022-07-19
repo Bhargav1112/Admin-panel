@@ -14,9 +14,11 @@ import { TextField } from "@mui/material";
 export default function MedicineDataTable(props) {
   const [tableData, setTableData] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
+  const [data, setData] = useState(0);
 
-  const handleClickOpenAlert = () => {
+  const handleClickOpenAlert = (params) => {
     setOpenAlert(true);
+    setData(params);
   };
 
   const handleCloseAlert = () => {
