@@ -10,12 +10,16 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMedicine } from "../../redux/action/medicine-action";
 
 export default function MedicineDataTable(props) {
   const [tableData, setTableData] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
   const [data, setData] = useState(0);
-
+  const dispatch = useDispatch();
+  const medicineData = useSelector((state) => state.medicine);
+  console.log(medicineData);
   const handleClickOpenAlert = (params) => {
     setOpenAlert(true);
     setData(params);
@@ -77,16 +81,22 @@ export default function MedicineDataTable(props) {
     setTableData(storageData);
   };
 
+  const { medicines, isLoading } = medicineData;
+
   useEffect(() => {
-    onAddMedicine();
+    dispatch(fetchMedicine());
   }, []);
+
+  useEffect(() => {
+    setTableData(medicines);
+  }, [medicines]);
 
   props.onAdd(onAddMedicine);
 
   const searchHandler = (event) => {
     const enteredString = event.target.value;
     const localData = JSON.parse(localStorage.getItem("medicine"));
-    const searchedData = localData.filter(
+    const searchedData = medicines.filter(
       (med) =>
         med.name.toLowerCase().includes(enteredString.toLowerCase()) ||
         med.price.toString().includes(enteredString) ||
@@ -108,13 +118,17 @@ export default function MedicineDataTable(props) {
         name="search"
       />
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={tableData}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-        />
+        {isLoading ? (
+          <div>loading...</div>
+        ) : (
+          <DataGrid
+            rows={tableData}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+          />
+        )}
       </div>
       <Dialog
         open={openAlert}

@@ -1,29 +1,39 @@
 {
-  "product": [
+  "medicines": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "abc",
+      "quantity": 150,
+      "expiry": 2025,
+      "price": 20
     },
     {
       "id": 2,
-      "title": "pro-2",
-      "author": "typicode"
+      "name": "def",
+      "quantity": 200,
+      "expiry": 2027,
+      "price": 25
     },
     {
       "id": 3,
-      "title": "pro-3",
-      "author": "typicode"
+      "name": "ghi",
+      "quantity": 250,
+      "expiry": 2023,
+      "price": 50
     },
     {
       "id": 4,
-      "title": "pro-4",
-      "author": "typicode"
+      "name": "jkl",
+      "quantity": 450,
+      "expiry": 2024,
+      "price": 75
     },
     {
-      "id": "5",
-      "title": "pro-54",
-      "author": "bhargav"
+      "id": 5,
+      "name": "mno",
+      "quantity": 500,
+      "expiry": 2025,
+      "price": 80
     }
   ],
   "comments": [
