@@ -12,12 +12,17 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { deleteMedicine } from "../../redux/action/medicine-action";
+import { useEffect } from "react";
 
-export default function MedicineDataTable(props) {
-    const [tableData, setTableData] = useState(props.tableData);
+function MedicineDataTable(props) {
+    const [tableData, setTableData] = useState([]);
     const [openAlert, setOpenAlert] = useState(false);
     const [data, setData] = useState("");
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setTableData(props.tableData);
+    }, [props.tableData]);
 
     const handleClickOpenAlert = (params) => {
         setOpenAlert(true);
@@ -70,15 +75,15 @@ export default function MedicineDataTable(props) {
         },
     ];
 
-    const onAddMedicine = () => {
-        const storageData = JSON.parse(localStorage.getItem("medicine"));
-        if (!storageData) {
-            return;
-        }
-        setTableData(storageData);
-    };
+    // const onAddMedicine = () => {
+    //     const storageData = JSON.parse(localStorage.getItem("medicine"));
+    //     if (!storageData) {
+    //         return;
+    //     }
+    //     setTableData(storageData);
+    // };
 
-    props.onAdd(onAddMedicine);
+    // props.onAdd(onAddMedicine);
 
     const searchHandler = (event) => {
         const enteredString = event.target.value;
@@ -136,3 +141,5 @@ export default function MedicineDataTable(props) {
         </>
     );
 }
+
+export default React.memo(MedicineDataTable);

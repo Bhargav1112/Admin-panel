@@ -1,11 +1,11 @@
 {
   "medicines": [
     {
-      "id": 4,
-      "name": "jkl",
-      "quantity": 450,
-      "expiry": 2024,
-      "price": 75
+      "id": 3,
+      "name": "ghisdsd",
+      "quantity": 500,
+      "expiry": 2025,
+      "price": "800"
     },
     {
       "id": 5,
@@ -13,6 +13,62 @@
       "quantity": 500,
       "expiry": 2025,
       "price": 80
+    },
+    {
+      "id": 6,
+      "name": "pqr",
+      "quantity": 500,
+      "expiry": 2025,
+      "price": 80
+    },
+    {
+      "id": 7,
+      "name": "stu",
+      "quantity": 500,
+      "expiry": 2025,
+      "price": 80
+    },
+    {
+      "id": 351,
+      "name": "Bhakhar Bhargav",
+      "price": "12",
+      "expiry": "2026",
+      "quantity": "123"
+    },
+    {
+      "id": 421,
+      "name": "asasadad",
+      "price": "123",
+      "expiry": "2025",
+      "quantity": "63"
+    },
+    {
+      "id": 641,
+      "name": "asadad",
+      "price": "152",
+      "expiry": "2029",
+      "quantity": "15"
+    },
+    {
+      "id": 13,
+      "name": "sddsd",
+      "price": "164",
+      "expiry": "2028",
+      "quantity": "25"
+    },
+    {
+      "id": 331,
+      "name": "sdfsf",
+      "price": "156",
+      "expiry": "2024",
+      "quantity": "252"
+    },
+    {
+      "id": 271,
+      "name": "asasasdzx",
+      "price": "14",
+      "expiry": "2058",
+      "quantity": "20"
     }
   ],
   "comments": [

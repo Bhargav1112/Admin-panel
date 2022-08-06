@@ -15,14 +15,29 @@ const medicineReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: null,
             };
+        case ActionType.ADD_MEDICINE:
+            return {
+                ...state,
+                medicines: state.medicines.concat(action.payload),
+            };
         case ActionType.DELETE_MEDICINE:
             return {
                 ...state,
                 medicines: state.medicines.filter(
                     (item) => item.id !== action.payload
                 ),
-                isLoading: false,
-                error: "",
+            };
+        case ActionType.UPDATE_MEDICINE:
+            console.log(action.payload);
+            return {
+                ...state,
+                medicines: state.medicines.map((med) => {
+                    if (med.id === action.payload.id) {
+                        return action.payload;
+                    } else {
+                        return med;
+                    }
+                }),
             };
         case ActionType.LOADING_MED:
             return {

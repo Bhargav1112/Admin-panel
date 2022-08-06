@@ -9,7 +9,11 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import MedicineDataTable from "./MedicineData";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMedicine } from "../../redux/action/medicine-action";
+import {
+    addMedicine,
+    fetchMedicine,
+    updateMedicine,
+} from "../../redux/action/medicine-action";
 
 function Medicine() {
     const [open, setOpen] = useState(false);
@@ -34,32 +38,35 @@ function Medicine() {
     };
 
     const insertToLocalStorage = (values, action) => {
-        const localData = JSON.parse(localStorage.getItem("medicine"));
+        // const localData = JSON.parse(localStorage.getItem("medicine"));
         let id = Math.floor(Math.random() * 1000 + 1);
         let data = {
             id,
             ...values,
         };
-        if (!localData) {
-            localStorage.setItem("medicine", JSON.stringify([data]));
-        } else {
-            localData.push(data);
-            localStorage.setItem("medicine", JSON.stringify(localData));
-        }
-        dataMethod();
+        // if (!localData) {
+        //     localStorage.setItem("medicine", JSON.stringify([data]));
+        // } else {
+        //     localData.push(data);
+        //     localStorage.setItem("medicine", JSON.stringify(localData));
+        // }
+        // dataMethod();
+        dispatch(addMedicine(data));
         handleClose();
         action.resetForm();
     };
 
     const updateHandler = (values, action) => {
-        const localData = JSON.parse(localStorage.getItem("medicine"));
-        const existingItemIndex = localData.findIndex(
-            (item) => item.id === values.id
-        );
-        localData[existingItemIndex] = { ...values };
-        localStorage.setItem("medicine", JSON.stringify(localData));
-        console.log(values);
-        dataMethod();
+        // const localData = JSON.parse(localStorage.getItem("medicine"));
+        // const existingItemIndex = localData.findIndex(
+        //     (item) => item.id === values.id
+        // );
+        // localData[existingItemIndex] = { ...values };
+        // localStorage.setItem("medicine", JSON.stringify(localData));
+        // console.log(values);
+        // dataMethod();
+
+        dispatch(updateMedicine(values));
         handleClose();
         action.resetForm();
         setIsEditing(false);
@@ -86,10 +93,10 @@ function Medicine() {
     const { handleBlur, handleChange, handleSubmit, values, errors, touched } =
         formik;
 
-    let dataMethod;
-    const onDisplayData = (method) => {
-        dataMethod = method;
-    };
+    // let dataMethod;
+    // const onDisplayData = (method) => {
+    //     dataMethod = method;
+    // };
 
     const count = useSelector((state) => state.count.counter);
 
@@ -190,7 +197,7 @@ function Medicine() {
                             </form>
                         </Dialog>
                         <MedicineDataTable
-                            onAdd={onDisplayData}
+                            // onAdd={onDisplayData}
                             onEdit={handleClickOpen}
                             formik={formik}
                             setIsEditing={setIsEditing}

@@ -1,9 +1,11 @@
 import { BASE_URL } from "../../shared/baseURL";
 import {
+    ADD_MEDICINE,
     DELETE_MEDICINE,
     ERROR_MED,
     FETCH_MEDICINE,
     LOADING_MED,
+    UPDATE_MEDICINE,
 } from "../reducer/ActionTypes";
 
 export const fetchMedicine = () => {
@@ -28,6 +30,29 @@ export const fetchMedicine = () => {
     };
 };
 
+export const addMedicine = (medicine) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetch(BASE_URL + "medicines", {
+                method: "POST",
+                body: JSON.stringify(medicine),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error(
+                    `Something went wrong : ${res.status} : ${res.statusText}`
+                );
+            }
+            dispatch({ type: ADD_MEDICINE, payload: medicine });
+        } catch (err) {
+            dispatch(errorMedicine(err.message));
+        }
+    };
+};
+
 export const deleteMedicine = (id) => {
     return async (dispatch) => {
         try {
@@ -49,6 +74,31 @@ export const deleteMedicine = (id) => {
             dispatch({ type: DELETE_MEDICINE, payload: id });
         } catch (error) {
             dispatch(errorMedicine(error.message));
+        }
+    };
+};
+
+export const updateMedicine = (medicine) => {
+    return async (dispatch) => {
+        console.log(medicine);
+        try {
+            const res = await fetch(BASE_URL + "medicines/" + medicine.id, {
+                method: "PUT",
+                body: JSON.stringify(medicine),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error(
+                    `Something went wrong : ${res.status} : ${res.statusText}`
+                );
+            }
+
+            dispatch({ type: UPDATE_MEDICINE, payload: medicine });
+        } catch (err) {
+            dispatch(errorMedicine(err.message));
         }
     };
 };
