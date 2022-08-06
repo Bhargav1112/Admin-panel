@@ -1,27 +1,6 @@
 {
   "medicines": [
     {
-      "id": 1,
-      "name": "abc",
-      "quantity": 150,
-      "expiry": 2025,
-      "price": 20
-    },
-    {
-      "id": 2,
-      "name": "def",
-      "quantity": 200,
-      "expiry": 2027,
-      "price": 25
-    },
-    {
-      "id": 3,
-      "name": "ghi",
-      "quantity": 250,
-      "expiry": 2023,
-      "price": 50
-    },
-    {
       "id": 4,
       "name": "jkl",
       "quantity": 450,
