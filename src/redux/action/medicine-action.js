@@ -1,3 +1,9 @@
+import {
+    medicineAddData,
+    medicineDeleteData,
+    medicineGetData,
+    medicineUpdateData,
+} from "../../common/api/medicineAPI";
 import { BASE_URL } from "../../shared/baseURL";
 import {
     ADD_MEDICINE,
@@ -13,19 +19,25 @@ export const fetchMedicine = () => {
         dispatch(loadingMedicine());
 
         setTimeout(() => {
-            fetch(BASE_URL + "medicines")
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error(
-                            `Something went wrong : ${res.status} : ${res.statusText}`
-                        );
-                    }
-                    return res.json();
-                })
-                .then((data) =>
-                    dispatch({ type: FETCH_MEDICINE, payload: data })
+            medicineGetData()
+                .then((res) =>
+                    dispatch({ type: FETCH_MEDICINE, payload: res.data })
                 )
                 .catch((error) => dispatch(errorMedicine(error.message)));
+
+            // fetch(BASE_URL + "medicines")
+            //     .then((res) => {
+            //         if (!res.ok) {
+            //             throw new Error(
+            //                 `Something went wrong : ${res.status} : ${res.statusText}`
+            //             );
+            //         }
+            //         return res.json();
+            //     })
+            //     .then((data) =>
+            //         dispatch({ type: FETCH_MEDICINE, payload: data })
+            //     )
+            //     .catch((error) => dispatch(errorMedicine(error.message)));
         }, 2000);
     };
 };
@@ -33,20 +45,26 @@ export const fetchMedicine = () => {
 export const addMedicine = (medicine) => {
     return async (dispatch) => {
         try {
-            const res = await fetch(BASE_URL + "medicines", {
-                method: "POST",
-                body: JSON.stringify(medicine),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (!res.ok) {
-                throw new Error(
-                    `Something went wrong : ${res.status} : ${res.statusText}`
-                );
+            const res = await medicineAddData(medicine);
+            console.log("add", res);
+            if (res.status === 201) {
+                dispatch({ type: ADD_MEDICINE, payload: medicine });
             }
-            dispatch({ type: ADD_MEDICINE, payload: medicine });
+
+            // const res = await fetch(BASE_URL + "medicines", {
+            //     method: "POST",
+            //     body: JSON.stringify(medicine),
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+
+            // if (!res.ok) {
+            //     throw new Error(
+            //         `Something went wrong : ${res.status} : ${res.statusText}`
+            //     );
+            // }
+            // dispatch({ type: ADD_MEDICINE, payload: medicine });
         } catch (err) {
             dispatch(errorMedicine(err.message));
         }
@@ -56,22 +74,27 @@ export const addMedicine = (medicine) => {
 export const deleteMedicine = (id) => {
     return async (dispatch) => {
         try {
-            const response = await fetch(BASE_URL + "medicines/" + id, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            console.log("res:", response);
-            console.log("id:", id);
-
-            if (!response.ok) {
-                throw new Error(
-                    `Something went wrong : ${response.status} : ${response.statusText}`
-                );
+            const res = await medicineDeleteData(id);
+            console.log("delete", res);
+            if (res.status === 200) {
+                dispatch({ type: DELETE_MEDICINE, payload: id });
             }
+            // const response = await fetch(BASE_URL + "medicines/" + id, {
+            //     method: "DELETE",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // });
+            // console.log("res:", response);
+            // console.log("id:", id);
 
-            dispatch({ type: DELETE_MEDICINE, payload: id });
+            // if (!response.ok) {
+            //     throw new Error(
+            //         `Something went wrong : ${response.status} : ${response.statusText}`
+            //     );
+            // }
+
+            // dispatch({ type: DELETE_MEDICINE, payload: id });
         } catch (error) {
             dispatch(errorMedicine(error.message));
         }
@@ -80,23 +103,27 @@ export const deleteMedicine = (id) => {
 
 export const updateMedicine = (medicine) => {
     return async (dispatch) => {
-        console.log(medicine);
         try {
-            const res = await fetch(BASE_URL + "medicines/" + medicine.id, {
-                method: "PUT",
-                body: JSON.stringify(medicine),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (!res.ok) {
-                throw new Error(
-                    `Something went wrong : ${res.status} : ${res.statusText}`
-                );
+            const res = await medicineUpdateData(medicine);
+            console.log("update", res);
+            if (res.status === 200) {
+                dispatch({ type: UPDATE_MEDICINE, payload: medicine });
             }
+            // const res = await fetch(BASE_URL + "medicines/" + medicine.id, {
+            //     method: "PUT",
+            //     body: JSON.stringify(medicine),
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // });
 
-            dispatch({ type: UPDATE_MEDICINE, payload: medicine });
+            // if (!res.ok) {
+            //     throw new Error(
+            //         `Something went wrong : ${res.status} : ${res.statusText}`
+            //     );
+            // }
+
+            // dispatch({ type: UPDATE_MEDICINE, payload: medicine });
         } catch (err) {
             dispatch(errorMedicine(err.message));
         }

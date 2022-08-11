@@ -1,41 +1,6 @@
 {
   "medicines": [
     {
-      "id": 3,
-      "name": "ghisdsd",
-      "quantity": 500,
-      "expiry": 2025,
-      "price": "800"
-    },
-    {
-      "id": 5,
-      "name": "mno",
-      "quantity": 500,
-      "expiry": 2025,
-      "price": 80
-    },
-    {
-      "id": 6,
-      "name": "pqr",
-      "quantity": 500,
-      "expiry": 2025,
-      "price": 80
-    },
-    {
-      "id": 7,
-      "name": "stu",
-      "quantity": 500,
-      "expiry": 2025,
-      "price": 80
-    },
-    {
-      "id": 351,
-      "name": "Bhakhar Bhargav",
-      "price": "12",
-      "expiry": "2026",
-      "quantity": "123"
-    },
-    {
       "id": 421,
       "name": "asasadad",
       "price": "123",
@@ -44,7 +9,7 @@
     },
     {
       "id": 641,
-      "name": "asadad",
+      "name": "asadad bhargav",
       "price": "152",
       "expiry": "2029",
       "quantity": "15"
@@ -69,6 +34,55 @@
       "price": "14",
       "expiry": "2058",
       "quantity": "20"
+    },
+    {
+      "id": 389,
+      "name": "bharg",
+      "price": "12",
+      "expiry": "2025",
+      "quantity": "45"
+    },
+    {
+      "id": 329,
+      "name": "asasasa",
+      "price": "25",
+      "expiry": "2026",
+      "quantity": "23"
+    },
+    {
+      "id": 676,
+      "name": "asasas",
+      "price": "14",
+      "expiry": "2028",
+      "quantity": "16"
+    },
+    {
+      "id": 341,
+      "name": "bhargav bhargav",
+      "price": "50",
+      "expiry": "2056",
+      "quantity": "15"
+    },
+    {
+      "id": 630,
+      "name": "asasbhargav",
+      "price": "45",
+      "expiry": "2056",
+      "quantity": "56"
+    },
+    {
+      "id": 553,
+      "name": "bharagv",
+      "price": "123",
+      "expiry": "2036",
+      "quantity": "123"
+    },
+    {
+      "id": 11,
+      "name": "Bhakhar Bhargav bhargav",
+      "price": "15",
+      "expiry": "2023",
+      "quantity": "13"
     }
   ],
   "comments": [
