@@ -83,13 +83,85 @@
       "price": "15",
       "expiry": "2023",
       "quantity": "13"
+    },
+    {
+      "id": 222,
+      "name": "bjhashagag",
+      "price": "78",
+      "expiry": "2026",
+      "quantity": "78"
     }
   ],
-  "comments": [
+  "patients": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "bha",
+      "phone": 9879879898,
+      "address": "adsfdjskdhvdkjshdj",
+      "ward": "general"
+    },
+    {
+      "id": 2,
+      "name": "hsjkahsa",
+      "phone": 9879879898,
+      "address": "adsfdjskdhvdkjshdjdk djj",
+      "ward": "general"
+    },
+    {
+      "id": 5,
+      "name": "adbcjkawd",
+      "phone": 9879879898,
+      "address": "adsfdjskdhvdkjshdjdk djjkfdkjkdfdf",
+      "ward": "general"
+    },
+    {
+      "id": 5821,
+      "name": "bhahdahd",
+      "phone": 78978987,
+      "address": "788vgavkvvchjasvcskg",
+      "ward": "gen"
+    },
+    {
+      "id": 4080,
+      "name": "bhakhar",
+      "phone": 78954564,
+      "address": "this is test address",
+      "ward": "gen"
+    },
+    {
+      "id": 2376,
+      "name": "zxxz79545",
+      "phone": 78878,
+      "address": "asssdd",
+      "ward": "ss"
+    },
+    {
+      "id": 3410,
+      "name": "bhalg",
+      "phone": 786545651,
+      "address": "A-204,Kevaldham apt ,Laxmipark soc. ,puna to bombaymarket road ,surat",
+      "ward": "asa"
+    },
+    {
+      "id": 8709,
+      "name": "Bhakhar Bhargav",
+      "phone": 9727247609,
+      "address": "A-204,Kevaldham apt ,Laxmipark soc. ,puna to bombaymarket road ,surat",
+      "ward": "gen"
+    },
+    {
+      "id": 6328,
+      "name": "Bhargav Vinodbhai Bhakharaassasa",
+      "phone": 9727247609,
+      "address": "A 204,Kevaldham apt ,Laxmipark soc.",
+      "ward": "asasas"
+    },
+    {
+      "id": 9601,
+      "name": "Bhakhar Bhargav bhargav",
+      "phone": 9727247609,
+      "address": "A-204,Kevaldham apt ,Laxmipark soc. ,puna to bombaymarket road ,surat",
+      "ward": "ICU"
     }
   ],
   "profile": {

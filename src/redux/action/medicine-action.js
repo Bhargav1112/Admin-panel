@@ -46,7 +46,6 @@ export const addMedicine = (medicine) => {
     return async (dispatch) => {
         try {
             const res = await medicineAddData(medicine);
-            console.log("add", res);
             if (res.status === 201) {
                 dispatch({ type: ADD_MEDICINE, payload: medicine });
             }
