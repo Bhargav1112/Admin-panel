@@ -5,7 +5,7 @@ const medicineAxios = axios.create({
     baseURL: BASE_URL,
 });
 
-const sendRequest = (config) => medicineAxios.request(config);
+export const sendRequest = (config) => medicineAxios.request(config);
 
 export const getDataRequest = (path) => {
     return sendRequest({
@@ -84,3 +84,5 @@ export const putRequestPatient = (path, data) => {
         data: JSON.stringify(data),
     });
 };
+
+

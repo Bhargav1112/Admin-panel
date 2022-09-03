@@ -164,6 +164,33 @@
       "ward": "ICU"
     }
   ],
+  "doctors": [
+    {
+      "id": 2,
+      "name": "DEF",
+      "degree": "mbbs"
+    },
+    {
+      "id": 4,
+      "name": "JKL",
+      "degree": "MBB"
+    },
+    {
+      "id": 5,
+      "name": "MNO",
+      "degree": "MBBS"
+    },
+    {
+      "id": 119,
+      "name": "bhargav",
+      "degree": "dnb"
+    },
+    {
+      "id": 699,
+      "name": "bhakhar",
+      "degree": "mbbs"
+    }
+  ],
   "profile": {
     "name": "typicode"
   }

@@ -20,6 +20,7 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { NavLink } from "react-router-dom";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const drawerWidth = 240;
 
@@ -104,6 +105,7 @@ export default function Layout(props) {
     { label: "Medicines", to: "/medicine", icon: <VaccinesIcon /> },
     { label: "Patients", to: "/patient", icon: <BadgeIcon /> },
     { label: "Counter", to: "/counter", icon: <AlarmAddIcon /> },
+    { label: "Doctors", to: "/doctor", icon: <LocalHospitalIcon /> },
   ];
 
   return (
