@@ -30,33 +30,33 @@ function Doctors(props) {
 
     const columns = [
         {
-          field: 'name',
-          headerName: 'Name',
-          width: 300,
+            field: 'name',
+            headerName: 'Name',
+            width: 300,
         },
         {
-          field: 'degree',
-          headerName: 'Degree',
-          width: 200,
+            field: 'degree',
+            headerName: 'Degree',
+            width: 200,
         },
         {
-          field: 'action',
-          headerName: 'Actions',
-          width: 110,
-          renderCell: params => {
-            return (
-                <Fragment>
-                    <IconButton onClick={handleEdit.bind(null, params)} >
-                        <EditIcon />
-                    </IconButton>
-                    <IconButton onClick={handleDelete.bind(null, params.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </Fragment>
-            )
-          }
+            field: 'action',
+            headerName: 'Actions',
+            width: 110,
+            renderCell: params => {
+                return (
+                    <Fragment>
+                        <IconButton onClick={handleEdit.bind(null, params)} >
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={handleDelete.bind(null, params.id)}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Fragment>
+                )
+            }
         }
-      ];
+    ];
 
     const handleOpen = () => {
         setCreateDataOpen(true)
@@ -81,8 +81,8 @@ function Doctors(props) {
 
     const handleChange = event => {
         const { name, value } = event.target
-        if(name === 'name') setEnteredName(value)
-        if(name === 'degree') setEnteredDegree(value)
+        if (name === 'name') setEnteredName(value)
+        if (name === 'degree') setEnteredDegree(value)
     }
 
     const handleDelete = id => {
@@ -91,15 +91,16 @@ function Doctors(props) {
 
     const handleSave = () => {
 
-        if(!isEditing){
-            const id = Math.floor(Math.random() * 1000 + 1)
-            const data = {
-                id,
-                name: enteredName,
-                degree: enteredDegree
-            }
-            dispatch(addDoctors(data))
-        }else{
+        if (!isEditing) {
+            // const id = Math.floor(Math.random() * 1000 + 1)
+            // const data = {
+            //     id,
+            //     name: enteredName,
+            //     degree: enteredDegree
+            // }
+            // dispatch(addDoctors(data))
+            dispatch(addDoctors({ name: enteredName, degree: enteredDegree }))
+        } else {
             const newData = {
                 ...editData,
                 name: enteredName,
@@ -108,7 +109,7 @@ function Doctors(props) {
             dispatch(updateDoctors(newData))
         }
 
-        if(error) return;
+        if (error) return;
 
         handleClose();
         setEnteredDegree('');
@@ -120,52 +121,52 @@ function Doctors(props) {
 
     return (
         <Fragment>
-            {isLoading ? 
+            {isLoading ?
                 <Loader />
-            :
-                error ? 
-                    <p style={{color: 'red'}}>{error}</p>
-                : 
-                <Fragment>
-                    <h1>Doctors' Details</h1>
-                    <Button variant="contained" onClick={handleOpen}>+ Add</Button>
-        
-                    <Dialog open={createDataOpen} onClose={handleClose}>
-                        <DialogTitle>Add Doctor info</DialogTitle>
-                        {error && <p style={{color: 'red'}}>{error}</p>}
-                        <DialogContent>
-                            <TextField
-                                margin="dense"
-                                id="name"
-                                name="name"
-                                label="Name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                value={enteredName}
-                            />
-                            <TextField
-                                margin="dense"
-                                id="degree"
-                                name="degree"
-                                label="Degree"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                onChange={handleChange}
-                                value={enteredDegree}
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={handleSave}>{isEditing ? 'Update' : 'Add'}</Button>
-                        </DialogActions>
-                    </Dialog>
-        
-                    <DocDataTable columns={columns} rows={doctors} /> 
-                </Fragment>
-                }
+                :
+                error ?
+                    <p style={{ color: 'red' }}>{error}</p>
+                    :
+                    <Fragment>
+                        <h1>Doctors' Details</h1>
+                        <Button variant="contained" onClick={handleOpen}>+ Add</Button>
+
+                        <Dialog open={createDataOpen} onClose={handleClose}>
+                            <DialogTitle>Add Doctor info</DialogTitle>
+                            {error && <p style={{ color: 'red' }}>{error}</p>}
+                            <DialogContent>
+                                <TextField
+                                    margin="dense"
+                                    id="name"
+                                    name="name"
+                                    label="Name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    onChange={handleChange}
+                                    value={enteredName}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="degree"
+                                    name="degree"
+                                    label="Degree"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    onChange={handleChange}
+                                    value={enteredDegree}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={handleSave}>{isEditing ? 'Update' : 'Add'}</Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        <DocDataTable columns={columns} rows={doctors} />
+                    </Fragment>
+            }
         </Fragment>
     );
 }
