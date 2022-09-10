@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
+import { Avatar, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import DocDataTable from './DocDataTable';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -16,13 +16,12 @@ function Doctors(props) {
     const [isEditing, setIsEditing] = useState(false)
     const [enteredName, setEnteredName] = useState('')
     const [enteredDegree, setEnteredDegree] = useState('')
+    const [uploadedFile, setUploadedFile] = useState(null)
     const [editData, setEditData] = useState(null)
     const dispatch = useDispatch()
     const docData = useSelector(state => state.doctor)
 
     const { doctors, isLoading, error } = docData
-
-
 
     useEffect(() => {
         dispatch(fetchDoctors())
@@ -33,6 +32,15 @@ function Doctors(props) {
             field: 'name',
             headerName: 'Name',
             width: 300,
+            renderCell: params => {
+                return (
+                    <Chip
+                        avatar={<Avatar alt={params.row.name} src={params.row.img} />}
+                        label={params.row.name}
+                        variant="outlined"
+                    />
+                )
+            }
         },
         {
             field: 'degree',
@@ -68,6 +76,7 @@ function Doctors(props) {
         setEnteredName('')
         setEnteredDegree('')
         setEditData('')
+        setUploadedFile(null)
     }
 
     const handleEdit = data => {
@@ -99,12 +108,13 @@ function Doctors(props) {
             //     degree: enteredDegree
             // }
             // dispatch(addDoctors(data))
-            dispatch(addDoctors({ name: enteredName, degree: enteredDegree }))
+            dispatch(addDoctors({ name: enteredName, degree: enteredDegree, img: uploadedFile }))
         } else {
             const newData = {
                 ...editData,
                 name: enteredName,
-                degree: enteredDegree
+                degree: enteredDegree,
+                img: uploadedFile ? uploadedFile : editData.img
             }
             dispatch(updateDoctors(newData))
         }
@@ -116,7 +126,11 @@ function Doctors(props) {
         setEnteredName('');
         setIsEditing(false)
         setEditData('')
-        console.log(doctors);
+        setUploadedFile(null)
+    }
+
+    const handleChangeFile = event => {
+        setUploadedFile(event.target.files[0])
     }
 
     return (
@@ -156,6 +170,15 @@ function Doctors(props) {
                                     variant="standard"
                                     onChange={handleChange}
                                     value={enteredDegree}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="file"
+                                    name="img_file"
+                                    type="file"
+                                    fullWidth
+                                    variant="standard"
+                                    onChange={handleChangeFile}
                                 />
                             </DialogContent>
                             <DialogActions>

@@ -2,7 +2,8 @@ import { deleteRequestDoc, getRequestDoc, postRequestDoc, putRequestDoc } from "
 import { URLS } from "../../common/api/URLS"
 import * as Types from '../reducer/ActionTypes'
 import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 
 export const fetchDoctors = () => {
@@ -44,8 +45,13 @@ export const addDoctors = (data) => {
 
 		try {
 			dispatch(loadingDoc())
-			const docRef = await addDoc(collection(db, "doctors"), data);
-			dispatch({ type: Types.ADD_DOC, payload: { ...data, id: docRef.id } })
+			const profImagesRef = ref(storage, `doctors/${data.img.name}`);
+			uploadBytes(profImagesRef, data.img).then((snapshot) => {
+				getDownloadURL(snapshot.ref).then(async (url) => {
+					const docRef = await addDoc(collection(db, "doctors"), { ...data, img: url });
+					dispatch({ type: Types.ADD_DOC, payload: { ...data, id: docRef.id, img: url } })
+				})
+			});
 		} catch (error) {
 			dispatch(errorDoc(error.message))
 		}
@@ -77,13 +83,25 @@ export const updateDoctors = data => {
 	return async (dispatch) => {
 		try {
 			dispatch(loadingDoc())
-			const doctorsRef = doc(db, "doctors", data.id);
 			const updatedData = {
 				name: data.name,
-				degree: data.degree
+				degree: data.degree,
+				img: data.img
 			}
-			await updateDoc(doctorsRef, updatedData);
-			dispatch({ type: Types.UPDATE_DOC, payload: data })
+			if (typeof data.img === 'object') {
+				const profImagesRef = ref(storage, `doctors/${data.img.name}`);
+				uploadBytes(profImagesRef, data.img).then((snapshot) => {
+					getDownloadURL(snapshot.ref).then(async (url) => {
+						const doctorsRef = doc(db, "doctors", data.id);
+						await updateDoc(doctorsRef, { ...updatedData, img: url });
+						dispatch({ type: Types.UPDATE_DOC, payload: { ...data, img: url } })
+					})
+				});
+			} else {
+				const doctorsRef = doc(db, "doctors", data.id);
+				await updateDoc(doctorsRef, updatedData);
+				dispatch({ type: Types.UPDATE_DOC, payload: data })
+			}
 		} catch (error) {
 			dispatch(errorDoc(error.message))
 		}
