@@ -1,7 +1,7 @@
 import { deleteRequestDoc, getRequestDoc, postRequestDoc, putRequestDoc } from "../../common/api/doctor.api"
 import { URLS } from "../../common/api/URLS"
 import * as Types from '../reducer/ActionTypes'
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 
@@ -54,12 +54,19 @@ export const addDoctors = (data) => {
 
 export const deleteDoctors = id => {
 	return async (dispatch) => {
+		// try {
+		// 	dispatch(loadingDoc())
+		// 	const res = await deleteRequestDoc(`${URLS.doctor}/`, id)
+		// 	if (res.status === 200 || res.status === 201) {
+		// 		dispatch({ type: Types.DELETE_DOC, payload: id })
+		// 	}
+		// } catch (error) {
+		// 	dispatch(errorDoc(error.message))
+		// }
 		try {
 			dispatch(loadingDoc())
-			const res = await deleteRequestDoc(`${URLS.doctor}/`, id)
-			if (res.status === 200 || res.status === 201) {
-				dispatch({ type: Types.DELETE_DOC, payload: id })
-			}
+			await deleteDoc(doc(db, "doctors", id));
+			dispatch({ type: Types.DELETE_DOC, payload: id })
 		} catch (error) {
 			dispatch(errorDoc(error.message))
 		}
@@ -70,13 +77,25 @@ export const updateDoctors = data => {
 	return async (dispatch) => {
 		try {
 			dispatch(loadingDoc())
-			const res = await putRequestDoc(`${URLS.doctor}/`, data)
-			if (res.status === 200 || res.status === 201) {
-				dispatch({ type: Types.UPDATE_DOC, payload: data })
+			const doctorsRef = doc(db, "doctors", data.id);
+			const updatedData = {
+				name: data.name,
+				degree: data.degree
 			}
+			await updateDoc(doctorsRef, updatedData);
+			dispatch({ type: Types.UPDATE_DOC, payload: data })
 		} catch (error) {
 			dispatch(errorDoc(error.message))
 		}
+		// try {
+		// 	dispatch(loadingDoc())
+		// 	const res = await putRequestDoc(`${URLS.doctor}/`, data)
+		// 	if (res.status === 200 || res.status === 201) {
+		// 		dispatch({ type: Types.UPDATE_DOC, payload: data })
+		// 	}
+		// } catch (error) {
+		// 	dispatch(errorDoc(error.message))
+		// }
 	}
 }
 
