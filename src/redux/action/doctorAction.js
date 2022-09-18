@@ -3,7 +3,7 @@ import { URLS } from "../../common/api/URLS"
 import * as Types from '../reducer/ActionTypes'
 import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 
 export const fetchDoctors = () => {
@@ -45,11 +45,12 @@ export const addDoctors = (data) => {
 
 		try {
 			dispatch(loadingDoc())
-			const profImagesRef = ref(storage, `doctors/${data.img.name}`);
+			const imgName = Math.floor(Math.random() * 10000).toString()
+			const profImagesRef = ref(storage, `doctors/${imgName}`);
 			uploadBytes(profImagesRef, data.img).then((snapshot) => {
 				getDownloadURL(snapshot.ref).then(async (url) => {
-					const docRef = await addDoc(collection(db, "doctors"), { ...data, img: url });
-					dispatch({ type: Types.ADD_DOC, payload: { ...data, id: docRef.id, img: url } })
+					const docRef = await addDoc(collection(db, "doctors"), { ...data, img: url, imgName });
+					dispatch({ type: Types.ADD_DOC, payload: { ...data, id: docRef.id, img: url, imgName } })
 				})
 			});
 		} catch (error) {
@@ -58,7 +59,7 @@ export const addDoctors = (data) => {
 	}
 }
 
-export const deleteDoctors = id => {
+export const deleteDoctors = data => {
 	return async (dispatch) => {
 		// try {
 		// 	dispatch(loadingDoc())
@@ -71,8 +72,10 @@ export const deleteDoctors = id => {
 		// }
 		try {
 			dispatch(loadingDoc())
-			await deleteDoc(doc(db, "doctors", id));
-			dispatch({ type: Types.DELETE_DOC, payload: id })
+			const profImgRef = ref(storage, `doctors/${data.imgName}`);
+			await deleteObject(profImgRef)
+			await deleteDoc(doc(db, "doctors", data.id));
+			dispatch({ type: Types.DELETE_DOC, payload: data.id })
 		} catch (error) {
 			dispatch(errorDoc(error.message))
 		}
@@ -83,23 +86,21 @@ export const updateDoctors = data => {
 	return async (dispatch) => {
 		try {
 			dispatch(loadingDoc())
-			const updatedData = {
-				name: data.name,
-				degree: data.degree,
-				img: data.img
-			}
+
 			if (typeof data.img === 'object') {
-				const profImagesRef = ref(storage, `doctors/${data.img.name}`);
+				await deleteObject(ref(storage, `doctors/${data.imgName}`))
+				const imgName = Math.floor(Math.random() * 1000).toString()
+				const profImagesRef = ref(storage, `doctors/${imgName}`);
 				uploadBytes(profImagesRef, data.img).then((snapshot) => {
 					getDownloadURL(snapshot.ref).then(async (url) => {
 						const doctorsRef = doc(db, "doctors", data.id);
-						await updateDoc(doctorsRef, { ...updatedData, img: url });
-						dispatch({ type: Types.UPDATE_DOC, payload: { ...data, img: url } })
+						await updateDoc(doctorsRef, { ...data, img: url, imgName });
+						dispatch({ type: Types.UPDATE_DOC, payload: { ...data, img: url, imgName } })
 					})
 				});
 			} else {
 				const doctorsRef = doc(db, "doctors", data.id);
-				await updateDoc(doctorsRef, updatedData);
+				await updateDoc(doctorsRef, data);
 				dispatch({ type: Types.UPDATE_DOC, payload: data })
 			}
 		} catch (error) {

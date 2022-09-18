@@ -57,7 +57,7 @@ function Doctors(props) {
                         <IconButton onClick={handleEdit.bind(null, params)} >
                             <EditIcon />
                         </IconButton>
-                        <IconButton onClick={handleDelete.bind(null, params.id)}>
+                        <IconButton onClick={handleDelete.bind(null, params.row)}>
                             <DeleteIcon />
                         </IconButton>
                     </Fragment>
@@ -94,8 +94,8 @@ function Doctors(props) {
         if (name === 'degree') setEnteredDegree(value)
     }
 
-    const handleDelete = id => {
-        dispatch(deleteDoctors(id))
+    const handleDelete = data => {
+        dispatch(deleteDoctors(data))
     }
 
     const handleSave = () => {
